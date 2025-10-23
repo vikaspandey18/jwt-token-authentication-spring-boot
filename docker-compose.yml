@@ -1,0 +1,30 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: vikas@456
+      MYSQL_DATABASE: jwt_demo
+    ports:
+      - "3306:3306"
+    networks:
+      - jwt-network
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: jwt-phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    networks:
+      - jwt-network
+
+networks:
+  jwt-network:
+    driver: bridge
